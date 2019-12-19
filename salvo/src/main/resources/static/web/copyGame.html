@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/game.css">
+    <title>Salvo - GamePlayers</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div id="app">
+        <div class="row">
+            <div class="col-6">
+                <div class=" d-flex justify-content-start"><h1>Game View!</h1></div>
+            </div>
+            <div class="col-6">
+                <div class="d-flex justify-content-end">
+                    <h4> {{viewer }} </h4>
+                    <button type="button" class="btn btn-primary"
+                            v-on:click="vlogout">Log out
+                    </button>
+                </div>
+            </div>
+        </div>
+        <h2>Ships!</h2>
+        <button type="button" class="btn btn-primary"
+                v-on:click="postShips">Add Ships
+        </button>
+        <div class="row">
+            <div class="col-6">
+                <table class="table table-bordered tamaño">
+                    <thead>
+                    <tr>
+                        <th v-for="item in coordenadaX">{{item}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="item in coordenadaY">
+                        <td>{{item}}</td>
+                        <td class="celda" :id="item+1"></td>
+                        <td class="celda" :id="item+2"></td>
+                        <td class="celda" :id="item+3"></td>
+                        <td class="celda" :id="item+4"></td>
+                        <td class="celda" :id="item+5"></td>
+                        <td class="celda" :id="item+6"></td>
+                        <td class="celda" :id="item+7"></td>
+                        <td class="celda" :id="item+8"></td>
+                        <td class="celda" :id="item+9"></td>
+                        <td class="celda" :id="item+10"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-6">
+                <div id="player">
+                    <ul>
+                        <li>Player: {{viewer}}</li>
+                    </ul>
+                </div>
+                <div id="opponent">
+                    <ul>
+                        <li>Opponent: {{oponente}}</li>
+                    </ul>
+                </div>
+                <div id="ships">
+                    <ul>
+                        <li v-for="item in ships">Ship: {{item.type}} Location: {{item.location}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <h2>Salvos!</h2>
+        <div class="row">
+            <div class="col-6">
+                <table class="table table-bordered tamaño">
+                    <thead>
+                    <tr>
+                        <th v-for="item in coordenadaX">{{item}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="item in coordenadaY">
+                        <td>{{item}}</td>
+                        <td class="celda" :id="'s'+item+1"></td>
+                        <td class="celda" :id="'s'+item+2"></td>
+                        <td class="celda" :id="'s'+item+3"></td>
+                        <td class="celda" :id="'s'+item+4"></td>
+                        <td class="celda" :id="'s'+item+5"></td>
+                        <td class="celda" :id="'s'+item+6"></td>
+                        <td class="celda" :id="'s'+item+7"></td>
+                        <td class="celda" :id="'s'+item+8"></td>
+                        <td class="celda" :id="'s'+item+9"></td>
+                        <td class="celda" :id="'s'+item+10"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-6">
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+<script src="game.js"></script>
+
+
+</body>
+</html>ml>

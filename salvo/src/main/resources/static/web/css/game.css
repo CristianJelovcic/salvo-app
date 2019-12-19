@@ -1,0 +1,33 @@
+
+.celda {
+    background-color: skyblue;
+}
+
+.salvosHits {
+    color: white;
+    text-align: center;
+    background-image: linear-gradient(#e66465, #e5b513);
+}
+
+.salvos {
+    color: white;
+    text-align: center;
+    background-image: linear-gradient(rgba(0, 0, 0, 1), #e5b513);
+}
+
+.ship {
+    background-color: royalblue;
+}
+
+#player {
+    background-color: chartreuse;
+}
+
+#opponent {
+    background-color: palevioletred;
+}
+
+#ships {
+    background-color: aqua;
+}
+

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="script/dist/normalize.css"/>
+    <link rel="stylesheet" href="script/dist/gridstack.css"/>
+    <link rel="stylesheet" href="script/dist/gridstack-extra.css"/>
+    <link rel="stylesheet" href="script/dist/style.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/game.css">
+    <title>Salvo - GamePlayers</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div id="app">
+        <div class="row">
+            <div class="col-4">
+                <div class=" d-flex justify-content-start"><h1>Game View!</h1></div>
+            </div>
+            <div class="col-4 justify-content-center">
+                <div id="player">
+                    <ul>
+                        <li>Player: {{viewer}}</li>
+                    </ul>
+                </div>
+                <div id="opponent">
+                    <ul>
+                        <li>Opponent: {{oponente}}</li>
+                    </ul>
+                </div>
+                <div id="ships">
+                    <ul>
+                        <li v-for="item in ships">Ship: {{item.type}} Location: {{item.location}}</li>
+                    </ul>
+                    <button type="button" class="btn btn-primary"
+                            v-on:click="postShips">Add Ships
+                    </button>
+
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="d-flex justify-content-end">
+                    <h4> {{viewer}} </h4>
+                    <button type="button" class="btn btn-primary"
+                            v-on:click="vlogout">Log out
+                    </button>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <h2>Ships!</h2>
+                <table class="table table-bordered tamaño">
+                    <thead>
+                    <tr>
+                        <th v-for="item in coordenadaX">{{item}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="item in coordenadaY">
+                        <td>{{item}}</td>
+                        <td class="celda" :id="item+1"></td>
+                        <td class="celda" :id="item+2"></td>
+                        <td class="celda" :id="item+3"></td>
+                        <td class="celda" :id="item+4"></td>
+                        <td class="celda" :id="item+5"></td>
+                        <td class="celda" :id="item+6"></td>
+                        <td class="celda" :id="item+7"></td>
+                        <td class="celda" :id="item+8"></td>
+                        <td class="celda" :id="item+9"></td>
+                        <td class="celda" :id="item+10"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="grid-ships">
+                    <!-- div que usa la librería gridstack grid-stack-10 se indica que son 10 columnas-->
+                    <div id="grid" class="grid-stack grid-stack-10">
+                        <!--se agrega un elemento (widget) a la grilla-->
+                        <!--data-gs-x y data-gs-y posicion de inicio -->
+                        <!-- data-gs-width cuantas columnas ocupa data-gs-height cuantas filas ocupa -->
+                        <div id="carrier" class="grid-stack-item"
+                             data-gs-x="0" data-gs-y="0"
+                             data-gs-width="3" data-gs-height="1">
+                            <!--div contenerdor (acá se coloca la imagen de fondo, además se coloca el mouse como una mano, etc..)-->
+                            <div class="grid-stack-item-content carrierHorizontal"></div>
+                        </div>
+                        <div id="patroal" class="grid-stack-item"
+                             data-gs-x="4" data-gs-y="0"
+                             data-gs-width="2" data-gs-height="1">
+                            <div class="grid-stack-item-content patroalHorizontal"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <h2>Salvos!</h2>
+                <table class="table table-bordered tamaño">
+                    <thead>
+                    <tr>
+                        <th v-for="item in coordenadaX">{{item}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="item in coordenadaY">
+                        <td>{{item}}</td>
+                        <td class="celda" :id="'s'+item+1"></td>
+                        <td class="celda" :id="'s'+item+2"></td>
+                        <td class="celda" :id="'s'+item+3"></td>
+                        <td class="celda" :id="'s'+item+4"></td>
+                        <td class="celda" :id="'s'+item+5"></td>
+                        <td class="celda" :id="'s'+item+6"></td>
+                        <td class="celda" :id="'s'+item+7"></td>
+                        <td class="celda" :id="'s'+item+8"></td>
+                        <td class="celda" :id="'s'+item+9"></td>
+                        <td class="celda" :id="'s'+item+10"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+
+        </div>
+    </div>
+
+
+
+    <!-- div solo para colocar el borde y posicionar en base a la altura y anchura-->
+<!--<div class="grid-ships">
+        &lt;!&ndash; div que usa la librería gridstack grid-stack-10 se indica que son 10 columnas&ndash;&gt;
+        <div id="grid" class="grid-stack grid-stack-10">
+            &lt;!&ndash;se agrega un elemento (widget) a la grilla&ndash;&gt;
+            &lt;!&ndash;data-gs-x y data-gs-y posicion de inicio &ndash;&gt;
+            &lt;!&ndash; data-gs-width cuantas columnas ocupa data-gs-height cuantas filas ocupa &ndash;&gt;
+            <div id="carrier" class="grid-stack-item"
+                 data-gs-x="0" data-gs-y="0"
+                 data-gs-width="3" data-gs-height="1">
+                &lt;!&ndash;div contenerdor (acá se coloca la imagen de fondo, además se coloca el mouse como una mano, etc..)&ndash;&gt;
+                <div class="grid-stack-item-content carrierHorizontal"></div>
+            </div>
+            <div id="patroal" class="grid-stack-item"
+                 data-gs-x="4" data-gs-y="0"
+                 data-gs-width="2" data-gs-height="1">
+                <div class="grid-stack-item-content patroalHorizontal"></div>
+            </div>
+        </div>
+    </div>-->
+</div>
+<script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+<script src="script/dist/jquery-ui.min.js"></script>
+<script src="script/dist/gridstack.js"></script>
+<script src="script/dist/gridstack.jQueryUI.js"></script>
+<script src="script/dist/jquery.ui.touch-punch.min.js"></script>
+
+<script src="game.js"></script>
+<script src="option.js"></script>
+
+
+</body>
+</html>ml>

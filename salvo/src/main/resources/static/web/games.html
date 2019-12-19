@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/game.css">
+
+    <title>Salvo - GamePlayers</title>
+</head>
+<body>
+<h2>GamesView</h2>
+<!-- LIST GAME -->
+<div class="container-fluid" id="app">
+    <div class="row">
+        <div class="col-6">
+            <form id="login-form" method="post">
+                <div><label for="exampleInputEmail1">Username: <input type="email" class="form-control"
+                                                                      id="exampleInputEmail1"
+                                                                      aria-describedby="emailHelp"
+                                                                      placeholder="Enter email" name="username"></label>
+                </div>
+                <div><label for="exampleInputPassword1">Password: <input type="password" class="form-control"
+                                                                         id="exampleInputPassword1"
+                                                                         placeholder="Password" name="password"></label>
+                </div>
+                <button id="login-btn" type="button" class="btn btn-primary" v-show=(playerName=="Guest")
+                        v-on:click="vlogin">Log in
+                </button>
+                <button id="register-btn" type="button" class="btn btn-primary" v-show=(playerName=="Guest")
+                        v-on:click="vregister">Register
+                </button>
+                <button id="logout-btn" type="button" class="btn btn-primary" v-show=(playerName!=="Guest")
+                        v-on:click="vlogout">Log out
+                </button>
+            </form>
+
+        </div>
+        <div class="col-6">
+            <h2>Username: {{playerName}}</h2>
+
+            <button id="create-btn" type="button" class="btn btn-success" v-show=(playerName!=="Guest")
+                    v-on:click="vcreateGame"
+            >CREATE GAME
+            </button>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <h2>Games</h2>
+            <table class="table table-striped table-dark table-bordered">
+                <tr v-for="(item, key) in games">
+                    <td> {{item.created | moment}}</td>
+                    <td :id="item.id"> {{item.gamePlayers.map(valor =>
+                        valor.player.email).join(" VS ")}}
+                    </td>
+                    <td v-show=(playerName!=="Guest")><a :href="vredirection(item)">
+                        <button v-if="vreturnGame(item)" type="button" class="btn btn-secondary">
+                            RETURN
+                        </button>
+                    </a>
+                        <template v-if="player.id!=item.gamePlayers[0].player.id && !item.gamePlayers[1]">
+                            <button type="button" class="btn btn-success" v-on:click="vjoinGame(item.id)"
+                            >JOIN
+                            </button>
+                        </template>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!-- LIST GAME -->
+        <div class="col-6">
+            <h2>Leaderboard</h2>
+            <table class="table table-bordered table-striped">
+                <thead class="thead-light">
+                <tr>
+                    <th>UserName</th>
+                    <th>Total</th>
+                    <th>Won</th>
+                    <th>Lost</th>
+                    <th>Tied</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(item, key) in playersList">
+                    <td>{{item.email}}</td>
+                    <td>{{item.total}}</td>
+                    <td>{{item.wins}}</td>
+                    <td>{{item.ties}}</td>
+                    <td>{{item.lost}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+<script src="games.js"></script>
+
+
+</body>
+</html>
