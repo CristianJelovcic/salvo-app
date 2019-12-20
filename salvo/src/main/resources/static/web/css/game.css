@@ -1,4 +1,9 @@
-
+.gameboard{
+    height: 450px;
+    width: 450px;
+    position: absolute;
+    margin: 30px;
+}
 .celda {
     background-color: skyblue;
 }
