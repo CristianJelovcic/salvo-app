@@ -32,6 +32,9 @@ public class SalvoController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+
+//------------------------------------------ POST SHIPS ----------------------------------------------------------------------------
+
  //POST Request to place all five Current GamePlayer's Ships
     @PostMapping(path = "/games/players/{gamePlayerId}/ships")
     public  ResponseEntity<Map<String, Object>> addShips(@PathVariable Long gamePlayerId, Authentication authentication, @RequestBody Set<Ship> shipsList){
@@ -61,7 +64,7 @@ public class SalvoController {
 
 
 
-    private Boolean isLegalShips(Set<Ship> shipsList){
+    /*private Boolean isLegalShips(Set<Ship> shipsList){
         Boolean result = true;
         for (Ship ship : shipsList) {
             if (!checkLength(ship) || !checkAlignement(ship)) {
@@ -109,25 +112,13 @@ public class SalvoController {
         //Boolean result = true;
         //return result;
         return true;
-    }
+    }*/
 
 
 
 
-    // CREA LOS DATOS DE MUESTRA PARA TODOS LOS JUEGOS
-    @GetMapping("/games")
-    public Map<String, Object> getAll(Authentication authentication) {
-        Map<String, Object> dto = new LinkedHashMap<String, Object>();
-        if (isGuest(authentication)) {
-            dto.put("player", null);
-        } else {
-            Player player = playerRepository.findByUserName(authentication.getName());
-            dto.put("player", queryPlayerDTO(player));
 
-        }
-        dto.put("games", gameRepository.findAll().stream().map(game -> queryGameDTO(game)).collect(Collectors.toList()));
-        return dto;
-    }
+//------------------------------------------ POST PARA REGISTRAR Y CREAR/UNIR-JUEGO ----------------------------------------------------------------------------
 
     @PostMapping(path = "/games")
     public ResponseEntity<Object> gameCreate(Authentication authentication) {
@@ -158,19 +149,6 @@ public class SalvoController {
         return new ResponseEntity<>(makeMap("Success", queryGamePlayerDTO(gamePlayerX)), HttpStatus.CREATED);
     }
 
-    // CREA LOS DATOS DE MUESTRA PARA UN JUGADOR EN UN JUEGO
-    @GetMapping("/game_view/{id}")
-    public ResponseEntity<Map<String, Object>> getGameView(@PathVariable Long id, Authentication authentication) {
-        Optional<GamePlayer> optionalGamePlayer = gamePlayerRepository.findById(id);
-        String optionalPlayer = optionalGamePlayer.get().getPlayer().getUserName();
-        String thisPlayer = authentication.getName();
-
-        if (optionalPlayer.compareTo(thisPlayer)!=0) {
-            return new ResponseEntity<>(makeMap("error", "Access error"), HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(queryGameViewDTO(optionalGamePlayer.get()), HttpStatus.OK);
-    }
-
     @PostMapping(path = "/players")
     public ResponseEntity<Object> register(
             @RequestParam String username, @RequestParam String password) {
@@ -188,6 +166,42 @@ public class SalvoController {
         player = playerRepository.save(new Player(username, passwordEncoder.encode(password)));
         return new ResponseEntity<>(makeMap("Player", player.getUserName()), HttpStatus.CREATED);
     }
+
+//------------------------------------------ GET VISTA DE JUEGOS (GAMES) ----------------------------------------------------------------------------
+
+    // CREA LOS DATOS DE MUESTRA PARA TODOS LOS JUEGOS
+    @GetMapping("/games")
+    public Map<String, Object> getAll(Authentication authentication) {
+        Map<String, Object> dto = new LinkedHashMap<String, Object>();
+        if (isGuest(authentication)) {
+            dto.put("player", null);
+        } else {
+            Player player = playerRepository.findByUserName(authentication.getName());
+            dto.put("player", queryPlayerDTO(player));
+
+        }
+        dto.put("games", gameRepository.findAll().stream().map(game -> queryGameDTO(game)).collect(Collectors.toList()));
+        return dto;
+    }
+
+//------------------------------------------ GET VISTA DE JUGADOR (GAME) ----------------------------------------------------------------------------
+
+    // CREA LOS DATOS DE MUESTRA PARA UN JUGADOR EN UN JUEGO
+    @GetMapping("/game_view/{id}")
+    public ResponseEntity<Map<String, Object>> getGameView(@PathVariable Long id, Authentication authentication) {
+        Optional<GamePlayer> optionalGamePlayer = gamePlayerRepository.findById(id);
+        String optionalPlayer = optionalGamePlayer.get().getPlayer().getUserName();
+        String thisPlayer = authentication.getName();
+
+        if (optionalPlayer.compareTo(thisPlayer)!=0) {
+            return new ResponseEntity<>(makeMap("error", "Access error"), HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(queryGameViewDTO(optionalGamePlayer.get()), HttpStatus.OK);
+    }
+
+
+//------------------------------------------ CONSTRUCCIÓN METODOS DTO ----------------------------------------------------------------------------
+
 
     // ESTE METODO DTO CREA UN JSON PARA VISTA DEL JUGADOR
     private Map<String, Object> queryGameViewDTO(GamePlayer gamePlayer) {
@@ -261,6 +275,7 @@ public class SalvoController {
         return null;
     }
 
+//------------------------------------------  METODOS COMPLEMENTARIOS ----------------------------------------------------------------------------
 
     private boolean isGuest(Authentication authentication) {
         return authentication == null || authentication instanceof AnonymousAuthenticationToken;

@@ -1,11 +1,16 @@
 .gameboard{
-    height: 450px;
-    width: 450px;
     position: absolute;
-    margin: 30px;
+    /* margin: 30px; */
+    border: solid black 3px;
+}
+.gameboardSize{
+    width: 450px;
+    height: 450px;
 }
 .celda {
     background-color: skyblue;
+    width: 45px;
+    height: 45px;
 }
 
 .salvosHits {

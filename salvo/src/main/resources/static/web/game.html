@@ -19,22 +19,7 @@
     <div class="container-fluid">
         <div id="app">
             <div class="row">
-                <div class="col-4">
-                    <div class=" d-flex justify-content-start">
-                        <h1>Game View!</h1>
-                    </div>
-                </div>
-                <div class="col-4 justify-content-center">
-                    <div id="player">
-                        <ul>
-                            <li>Player: {{viewer}}</li>
-                        </ul>
-                    </div>
-                    <div id="opponent">
-                        <ul>
-                            <li>Opponent: {{oponente}}</li>
-                        </ul>
-                    </div>
+                <div class="col-6 justify-content-center">
                     <div id="ships">
                         <ul>
                             <li v-for="item in ships">Ship: {{item.type}} Location: {{item.location}}</li>
@@ -44,9 +29,18 @@
 
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="d-flex justify-content-end">
-                        <h4> {{viewer}} </h4>
+                <div class="col-6">
+                    <div>
+                        <div id="player">
+                            <ul>
+                                <li>Gameplayer: {{viewer}}</li>
+                            </ul>
+                        </div>
+                        <div id="opponent">
+                            <ul>
+                                <li>Opponent: {{oponente}}</li>
+                            </ul>
+                        </div>
                         <button type="button" class="btn btn-primary" v-on:click="vlogout">Log out
                         </button>
 
@@ -56,13 +50,8 @@
             </div>
             <div class="row">
                 <div class="col-6">
-                    <div class="gameboard">
-                        <table class="table table-bordered tamaño">
-                            <thead>
-                                <tr>
-                                    <th v-for="item in coordenadaX"></th>
-                                </tr>
-                            </thead>
+                    <div class="gameboard gameboardSize">
+                        <table class="table table-bordered ">
                             <tbody>
                                 <tr v-for="item in coordenadaY">
                                     <td class="celda" :id="item+1"></td>
@@ -84,13 +73,25 @@
                         <div id="grid" class="grid-stack grid-stack-10">
                             <!--se agrega un elemento (widget) a la grilla-->
                             <!--data-gs-x y data-gs-y posicion de inicio -->
-                            <!-- data-gs-width cuantas columnas ocupa data-gs-height cuantas filas ocupa -->
-                            <div id="carrier" class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="3"
-                                data-gs-height="1">
-                                <!--div contenerdor (acá se coloca la imagen de fondo, además se coloca el mouse como una mano, etc..)-->
-                                <div class="grid-stack-item-content carrierHorizontal"></div>
+<!--                             data-gs-width cuantas columnas ocupa data-gs-height cuantas filas ocupa -->
+
+                            <div id="submarine" class="grid-stack-item" data-gs-x="0" data-gs-y="2" data-gs-width="3"
+                                 data-gs-height="1">
+                                <div class="grid-stack-item-content submarineHorizontal"></div>
                             </div>
-                            <div id="patroal" class="grid-stack-item" data-gs-x="4" data-gs-y="0" data-gs-width="2"
+                            <div id="destroyer" class="grid-stack-item" data-gs-x="0" data-gs-y="3" data-gs-width="3"
+                                 data-gs-height="1">
+                                <div class="grid-stack-item-content destroyerHorizontal"></div>
+                            </div>
+                            <div id="battleship" class="grid-stack-item" data-gs-x="0" data-gs-y="1" data-gs-width="4"
+                                 data-gs-height="1">
+                                <div class="grid-stack-item-content battleshipHorizontal"></div>
+                            </div>
+                             <div id="carrier" class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="5"
+                                data-gs-height="1">
+                                 <div class="grid-stack-item-content carrierHorizontal"></div>
+                             </div>
+                             <div id="patroal" class="grid-stack-item" data-gs-x="0" data-gs-y="4" data-gs-width="2"
                                 data-gs-height="1">
                                 <div class="grid-stack-item-content patroalHorizontal"></div>
                             </div>
@@ -98,54 +99,27 @@
                     </div>
                 </div>
                 <div class="col-6">
-                    <table class="table table-bordered tamaño">
-                        <thead>
-                            <tr>
-                                <th v-for="item in coordenadaX">{{item}}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="item in coordenadaY">
-                                <td>{{item}}</td>
-                                <td class="celda" :id="'s'+item+1"></td>
-                                <td class="celda" :id="'s'+item+2"></td>
-                                <td class="celda" :id="'s'+item+3"></td>
-                                <td class="celda" :id="'s'+item+4"></td>
-                                <td class="celda" :id="'s'+item+5"></td>
-                                <td class="celda" :id="'s'+item+6"></td>
-                                <td class="celda" :id="'s'+item+7"></td>
-                                <td class="celda" :id="'s'+item+8"></td>
-                                <td class="celda" :id="'s'+item+9"></td>
-                                <td class="celda" :id="'s'+item+10"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="gameboard gameboardSize">
+                        <table class="table table-bordered ">
+                            <tbody>
+                                <tr v-for="item in coordenadaY">
+                                    <td class="celda" :id="'s'+item+1"></td>
+                                    <td class="celda" :id="'s'+item+2"></td>
+                                    <td class="celda" :id="'s'+item+3"></td>
+                                    <td class="celda" :id="'s'+item+4"></td>
+                                    <td class="celda" :id="'s'+item+5"></td>
+                                    <td class="celda" :id="'s'+item+6"></td>
+                                    <td class="celda" :id="'s'+item+7"></td>
+                                    <td class="celda" :id="'s'+item+8"></td>
+                                    <td class="celda" :id="'s'+item+9"></td>
+                                    <td class="celda" :id="'s'+item+10"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-
-
-
-        <!-- div solo para colocar el borde y posicionar en base a la altura y anchura-->
-        <!--<div class="grid-ships">
-        &lt;!&ndash; div que usa la librería gridstack grid-stack-10 se indica que son 10 columnas&ndash;&gt;
-        <div id="grid" class="grid-stack grid-stack-10">
-            &lt;!&ndash;se agrega un elemento (widget) a la grilla&ndash;&gt;
-            &lt;!&ndash;data-gs-x y data-gs-y posicion de inicio &ndash;&gt;
-            &lt;!&ndash; data-gs-width cuantas columnas ocupa data-gs-height cuantas filas ocupa &ndash;&gt;
-            <div id="carrier" class="grid-stack-item"
-                 data-gs-x="0" data-gs-y="0"
-                 data-gs-width="3" data-gs-height="1">
-                &lt;!&ndash;div contenerdor (acá se coloca la imagen de fondo, además se coloca el mouse como una mano, etc..)&ndash;&gt;
-                <div class="grid-stack-item-content carrierHorizontal"></div>
-            </div>
-            <div id="patroal" class="grid-stack-item"
-                 data-gs-x="4" data-gs-y="0"
-                 data-gs-width="2" data-gs-height="1">
-                <div class="grid-stack-item-content patroalHorizontal"></div>
-            </div>
-        </div>
-    </div>-->
     </div>
     <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -161,7 +135,7 @@
     <script src="script/dist/jquery.ui.touch-punch.min.js"></script>
 
     <script src="game.js"></script>
-    <script src="option.js"></script>
+    <script src="optionGrid.js"></script>
 
 
 </body>

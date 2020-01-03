@@ -33,12 +33,15 @@ public class Salvo {
     public Salvo() {
     }
 
-    ;
-
     public Salvo(int turn, List<String> locationSalvo) {
         this.turn = turn;
         this.locationSalvo = locationSalvo;
 
+    }
+    public Salvo(int turn, List<String> locationSalvo, GamePlayer gamePlayer) {
+        this.turn = turn;
+        this.locationSalvo = locationSalvo;
+        this.gamePlayer=gamePlayer;
     }
 
     // getters

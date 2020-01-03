@@ -6,23 +6,52 @@
 }
 
 .carrierHorizontal{
-    background-image: url('submarinehor.png');
+    background-image: url('img/carrierhor.png');
     background-size: contain;
 }
 
 .carrierHorizontalRed{
-    background-image: url('submarinehor_red.png');
+    background-image: url('img/carrierver.png');
     background-size: 100% 100%;
     width: 45px !important;
 }
+.battleshipHorizontal{
+    background-image: url('img/battleshiphor.png');
+    background-size: contain;
+}
 
+.battleshipHorizontalRed{
+    background-image: url('img/battleshipver.png');
+    background-size: 100% 100%;
+    width: 45px !important;
+}
+.submarineHorizontal{
+    background-image: url('img/submarinehor.png');
+    background-size: contain;
+}
+
+.submarineHorizontalRed{
+    background-image: url('img/submarinever.png');
+    background-size: 100% 100%;
+    width: 45px !important;
+}
+.destroyerHorizontal{
+    background-image: url('img/destroyerhor.png');
+    background-size: contain;
+}
+
+.destroyerHorizontalRed{
+    background-image: url('img/destroyerver.png');
+    background-size: 100% 100%;
+    width: 45px !important;
+}
 .patroalHorizontal{
-    background-image: url('patrolboathor.png');
+    background-image: url('img/patrolboathor.png');
     background-size: contain;
 }
 
 .patroalHorizontalRed{
-    background-image: url('patrolboathor_red.png');
+    background-image: url('img/patrolboatver.png');
     background-size: 100% 100%;
     width: 45px !important;
 }
@@ -30,6 +59,12 @@
 
 .grid-ships{
     border: solid black;
-    height: 300px;
-    width: 300px;
+    height: 450px;
+    width: 450px;
+}
+.grid-fleet{
+    border: solid black;
+    height: 450px;
+    width: 200px;
+
 }

@@ -16,12 +16,13 @@ $(function () {
 });
 
 
-// OBJECT VUE
+//------------------------------------------ VUE OBJECT ----------------------------------------------------------------------------
+
 var app = new Vue({
     el: '#app',
     data: {
         game_view: {},
-        coordenadaX: ["", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        coordenadaX: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         coordenadaY: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
         gamePlayer: [],
         viewer: "",
@@ -36,6 +37,8 @@ var app = new Vue({
         salvoes: [],
         hits: [],
         allships: ["carrier", "battleship", "submarine", "destroyer", "patrol_boat"],
+        datax:0,
+        datay:0,
         placedShips: [
             {typeShip: "Carrier", locationShip: []},
             {typeShip: "Battleship", locationShip: []},
@@ -89,6 +92,55 @@ var app = new Vue({
     }
 })
 
+function checkType(ship){
+var result = false;
+    switch(ship.getTypeShip()){
+        case "carrier":
+            var carrierLoc=[];
+            if(esVertical(ship)){
+                //actualiza ubicacion
+                // proceso vertical
+            }
+            else {
+                // proceso horizontal
+            }
+            break;
+        case "battleship":
+            if("esvertical()"){
+                //actualiza ubicacion
+                var battleshipLoc=[];
+            }
+            break;
+        case "destroyer":
+            if("esvertical()"){
+                //actualiza ubicacion
+                var destroyerLoc=[];
+            }
+            break;
+        case "submarine":
+            if("esvertical()"){
+                //actualiza ubicacion
+                var submarineLoc=[];
+            }
+            break;
+        case "patroal":
+            if("esvertical()"){
+                //actualiza ubicacion
+                var patroalLoc=[];
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+
+ function esVertical(ship) {
+
+ }
+
+//------------------------------------------ JSON  ----------------------------------------------------------------------------
+
 // TRANSFIERE DE DATOS
 function loadDATAJson(data) {
     var myJson = data;
@@ -103,6 +155,7 @@ function loadDATAJson(data) {
 
 }
 
+//------------------------------------------ HITS (SALVOS) ----------------------------------------------------------------------------
 
 function salvoHits(salvo) {
     salvo.salvoLocation.forEach(loc => {
@@ -115,8 +168,14 @@ function salvoHits(salvo) {
         })
     });
 }
-
-
+// PINTA LAS SELDAS CON IMPACTO DE SALVOS EN SHIPS
+function paintLocationSalvoHits(loc, turn) {
+    var elemento = document.getElementById(loc);
+    elemento.innerHTML = turn;
+    elemento.classList.remove("ship");
+    elemento.classList.add("salvosHits");
+}
+//------------------------------------------ SALVOS ----------------------------------------------------------------------------
 // SELECCIONA EL SALVO
 function selectLocationsSalvos(salvo) {
     if (salvo.player == app.viewerSalvos) {
@@ -141,14 +200,8 @@ function paintLocationSalvo(location, turn) {
     elemento.classList.add("salvos");
 }
 
-// PINTA LAS SELDAS CON IMPACTO DE SALVOS EN SHIPS
-function paintLocationSalvoHits(loc, turn) {
-    var elemento = document.getElementById(loc);
-    elemento.innerHTML = turn;
-    elemento.classList.remove("ship");
-    elemento.classList.add("salvosHits");
-}
 
+//------------------------------------------  SHIPS  ----------------------------------------------------------------------------
 
 // SELECCIONA LA NAVE
 function selectShips(ships) {
@@ -169,6 +222,7 @@ function paintLocation(locationShip) {
     elemento.classList.add("ship");
 }
 
+//------------------------------------------ VISTA JUGADOR ----------------------------------------------------------------------------
 
 // MOSTRAR LOS JUGADORES EN GAME VIEW
 function listGamePlayers(gameplayers) {
@@ -186,6 +240,9 @@ function toShowPlayer(gameplayer) {
         app.oponente = gameplayer.player.email;
     }
 }
+
+//------------------------------------------ CONTROLES ----------------------------------------------------------------------------
+
 // LOGOUT
 function logout(evt) {
     evt.preventDefault();
