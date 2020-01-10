@@ -3,139 +3,109 @@
 
 <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link rel="stylesheet" href="script/dist/normalize.css" />
-    <link rel="stylesheet" href="script/dist/gridstack.css" />
-    <link rel="stylesheet" href="script/dist/gridstack-extra.css" />
-    <link rel="stylesheet" href="script/dist/style.css" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="script/dist/normalize.css"/>
+    <link rel="stylesheet" href="script/dist/gridstack.css"/>
+    <link rel="stylesheet" href="script/dist/gridstack-extra.css"/>
+    <link rel="stylesheet" href="script/dist/style.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/game.css">
     <title>Salvo - GamePlayers</title>
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div id="app">
-            <div class="row">
-                <div class="col-6 justify-content-center">
-                    <div id="ships">
-                        <ul>
-                            <li v-for="item in ships">Ship: {{item.type}} Location: {{item.location}}</li>
-                        </ul>
-                        <button type="button" class="btn btn-primary" v-on:click="postShips">Add Ships
-                        </button>
+<div id="app" class="container-fluid">
+    <div class="row">
+        <div class="col-4">
 
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div>
-                        <div id="player">
-                            <ul>
-                                <li>Gameplayer: {{viewer}}</li>
-                            </ul>
-                        </div>
-                        <div id="opponent">
-                            <ul>
-                                <li>Opponent: {{oponente}}</li>
-                            </ul>
-                        </div>
-                        <button type="button" class="btn btn-primary" v-on:click="vlogout">Log out
-                        </button>
+            <select name="listaships" id="listaships" class="custom-select">
+                <option v-for="item in ships" :value="item.type">Ship: {{item.type}} Location: {{item.location}}
+                </option>
+            </select>
+        </div>
+        <div class="col-sm-2">
+            <button id="startPlay-btn" type="button" class="btn btn-warning mt-2">
+                Start to play
+            </button>
+            <button id="shoot-btn" class="btn btn-warning mt-2" onclick="addSalvoes">Shoot!</button>
 
-
-                    </div>
-                </div>
+        </div>
+        <div class="col-4 ">
+            <div id="player" class="mr-3">
+                <span>Gameplayer: {{viewer}}</span>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="gameboard gameboardSize">
-                        <table class="table table-bordered ">
-                            <tbody>
-                                <tr v-for="item in coordenadaY">
-                                    <td class="celda" :id="item+1"></td>
-                                    <td class="celda" :id="item+2"></td>
-                                    <td class="celda" :id="item+3"></td>
-                                    <td class="celda" :id="item+4"></td>
-                                    <td class="celda" :id="item+5"></td>
-                                    <td class="celda" :id="item+6"></td>
-                                    <td class="celda" :id="item+7"></td>
-                                    <td class="celda" :id="item+8"></td>
-                                    <td class="celda" :id="item+9"></td>
-                                    <td class="celda" :id="item+10"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="grid-ships gameboard">
-                        <!-- div que usa la librería gridstack grid-stack-10 se indica que son 10 columnas-->
-                        <div id="grid" class="grid-stack grid-stack-10">
-                            <!--se agrega un elemento (widget) a la grilla-->
-                            <!--data-gs-x y data-gs-y posicion de inicio -->
-<!--                             data-gs-width cuantas columnas ocupa data-gs-height cuantas filas ocupa -->
-
-                            <div id="submarine" class="grid-stack-item" data-gs-x="0" data-gs-y="2" data-gs-width="3"
-                                 data-gs-height="1">
-                                <div class="grid-stack-item-content submarineHorizontal"></div>
-                            </div>
-                            <div id="destroyer" class="grid-stack-item" data-gs-x="0" data-gs-y="3" data-gs-width="3"
-                                 data-gs-height="1">
-                                <div class="grid-stack-item-content destroyerHorizontal"></div>
-                            </div>
-                            <div id="battleship" class="grid-stack-item" data-gs-x="0" data-gs-y="1" data-gs-width="4"
-                                 data-gs-height="1">
-                                <div class="grid-stack-item-content battleshipHorizontal"></div>
-                            </div>
-                             <div id="carrier" class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="5"
-                                data-gs-height="1">
-                                 <div class="grid-stack-item-content carrierHorizontal"></div>
-                             </div>
-                             <div id="patroal" class="grid-stack-item" data-gs-x="0" data-gs-y="4" data-gs-width="2"
-                                data-gs-height="1">
-                                <div class="grid-stack-item-content patroalHorizontal"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="gameboard gameboardSize">
-                        <table class="table table-bordered ">
-                            <tbody>
-                                <tr v-for="item in coordenadaY">
-                                    <td class="celda" :id="'s'+item+1"></td>
-                                    <td class="celda" :id="'s'+item+2"></td>
-                                    <td class="celda" :id="'s'+item+3"></td>
-                                    <td class="celda" :id="'s'+item+4"></td>
-                                    <td class="celda" :id="'s'+item+5"></td>
-                                    <td class="celda" :id="'s'+item+6"></td>
-                                    <td class="celda" :id="'s'+item+7"></td>
-                                    <td class="celda" :id="'s'+item+8"></td>
-                                    <td class="celda" :id="'s'+item+9"></td>
-                                    <td class="celda" :id="'s'+item+10"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div id="opponent" class="mr-3">
+                <span>Opponent: {{oponente}}</span>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <button id="logout-btn" type="button" class="btn btn-primary" onclick="logout()">Logout</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="gameboard gameboardSize">
+                <table class="table table-bordered ">
+                    <tbody>
+                    <tr v-for="item in coordenadaY">
+                        <td class="celda" :id="item+1"></td>
+                        <td class="celda" :id="item+2"></td>
+                        <td class="celda" :id="item+3"></td>
+                        <td class="celda" :id="item+4"></td>
+                        <td class="celda" :id="item+5"></td>
+                        <td class="celda" :id="item+6"></td>
+                        <td class="celda" :id="item+7"></td>
+                        <td class="celda" :id="item+8"></td>
+                        <td class="celda" :id="item+9"></td>
+                        <td class="celda" :id="item+10"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="grid-ships gameboard">
+                <!-- div que usa la librería gridstack grid-stack-10 se indica que son 10 columnas-->
+                <div id="grid" class="grid-stack grid-stack-10">
                 </div>
             </div>
         </div>
+        <div class="col-6">
+            <div class=" gridSalvo gameboard gameboardSize">
+                <table class="table table-bordered ">
+                    <tbody>
+                    <tr v-for="item in coordenadaY">
+                        <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+1"></td>
+                        <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+2"></td>
+                        <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+3"></td>
+                        <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+4"></td>
+                        <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+5"></td>
+                        <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+6"></td>
+                        <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+7"></td>
+                        <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+8"></td>
+                        <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+9"></td>
+                        <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+10"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+</div>
+<script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
 
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
-    <script src="script/dist/jquery-ui.min.js"></script>
-    <script src="script/dist/gridstack.js"></script>
-    <script src="script/dist/gridstack.jQueryUI.js"></script>
-    <script src="script/dist/jquery.ui.touch-punch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+<script src="script/dist/jquery-ui.min.js"></script>
+<script src="script/dist/gridstack.js"></script>
+<script src="script/dist/gridstack.jQueryUI.js"></script>
+<script src="script/dist/jquery.ui.touch-punch.min.js"></script>
 
-    <script src="game.js"></script>
-    <script src="optionGrid.js"></script>
+<script src="game.js"></script>
 
 
 </body>

@@ -32,7 +32,45 @@ public class SalvoController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+//------------------------------------------ POST SALVOS ---------------------------------------------------------------
 
+    @PostMapping(path ="games/players/{gamePlayerId}/salvoes")
+    public ResponseEntity<Map<String, Object>> addSalvoes(@PathVariable Long gamePlayerId, Authentication authentication, @RequestBody Salvo salvo){
+
+        Optional<GamePlayer> gamePlayer = gamePlayerRepository.findById(gamePlayerId);
+        Optional<GamePlayer> opponentGamePlayer = gamePlayer.get().getGame().getGamePlayers().stream().filter(gp -> gp.getId() != gamePlayerId).findFirst();
+
+        if(isGuest(authentication)){
+            return new ResponseEntity<>(makeMap("error", "UNAUTHORIZED"), HttpStatus.UNAUTHORIZED);
+        }
+        //  El método isPresent () de java.util .Optional class en Java se usa para averiguar si hay un valor presente
+        //  en esta instancia Opcional. Si no hay ningún valor presente en esta instancia Opcional,
+        //  entonces este método devuelve falso, de lo contrario es verdadero.
+
+        if(!gamePlayer.isPresent()){
+            return new ResponseEntity<>(makeMap("error", "THE GAME DOES NOT EXIST"), HttpStatus.UNAUTHORIZED);
+        }
+        if(!gamePlayer.get().getPlayer().getUserName().equals(authentication.getName())){
+            return new ResponseEntity<>(makeMap("error","THERE IS NO PLAYER WITH THE GIVEN ID" ), HttpStatus.FORBIDDEN);
+        }
+/*        if(opponentGamePlayer.get().getShips().size()==0){
+            return  new ResponseEntity<>(makeMap("ERROR", "THE OPONENT DOES NOT HAVE SHIPS"), HttpStatus.FORBIDDEN);
+        }*/
+
+        if(gamePlayer.get().getSalvo().stream().anyMatch(item -> item.getTurn() == salvo.getTurn()) ){
+            return new ResponseEntity<>(makeMap("error", "FORBIDDEN"), HttpStatus.FORBIDDEN);
+        }
+
+        if(!opponentGamePlayer.isPresent() || salvo.getTurn() -1 > opponentGamePlayer.get().getSalvo().size()){
+            return  new ResponseEntity<>(makeMap("error", "FORBIDDEN"), HttpStatus.FORBIDDEN);
+        }
+
+        Set<Salvo> newSalvo = new HashSet<>();
+        newSalvo.add(salvo);
+        gamePlayer.get().addSalvo((Salvo) newSalvo);
+        gamePlayerRepository.save(gamePlayer.get());
+        return  new ResponseEntity<>(makeMap("Success", "CREATED"), HttpStatus.CREATED);
+    }
 //------------------------------------------ POST SHIPS ----------------------------------------------------------------------------
 
  //POST Request to place all five Current GamePlayer's Ships
@@ -61,63 +99,6 @@ public class SalvoController {
         return new ResponseEntity<>(makeMap("ships", "your warships were placed!"), HttpStatus.CREATED);
 
     }
-
-
-
-    /*private Boolean isLegalShips(Set<Ship> shipsList){
-        Boolean result = true;
-        for (Ship ship : shipsList) {
-            if (!checkLength(ship) || !checkAlignement(ship)) {
-                result = false;
-            }
-        }
-        return result;
-    }
-
-    private Boolean checkLength(Ship ship){
-        Boolean result = false;
-        switch(ship.getTypeShip()){
-            case "Carrier":
-                if(ship.getLocationShip().size() == 5){
-                    result = true;
-                }
-                break;
-            case "Battleship":
-                if(ship.getLocationShip().size() == 4){
-                    result = true;
-                }
-                break;
-            case "Destroyer":
-                if(ship.getLocationShip().size() == 3){
-                    result = true;
-                }
-                break;
-            case "Submarine":
-                if(ship.getLocationShip().size() == 3){
-                    result = true;
-                }
-                break;
-            case "Patrol boat":
-                if(ship.getLocationShip().size() == 2){
-                    result = true;
-                }
-                break;
-            default:
-                result = false;
-                break;
-        }
-        return result;
-    }
-    private Boolean checkAlignement(Ship ship){
-        //Boolean result = true;
-        //return result;
-        return true;
-    }*/
-
-
-
-
-
 //------------------------------------------ POST PARA REGISTRAR Y CREAR/UNIR-JUEGO ----------------------------------------------------------------------------
 
     @PostMapping(path = "/games")
@@ -191,11 +172,15 @@ public class SalvoController {
     public ResponseEntity<Map<String, Object>> getGameView(@PathVariable Long id, Authentication authentication) {
         Optional<GamePlayer> optionalGamePlayer = gamePlayerRepository.findById(id);
         String optionalPlayer = optionalGamePlayer.get().getPlayer().getUserName();
+        Long optionalGame = optionalGamePlayer.get().getGame().getId();
         String thisPlayer = authentication.getName();
 
         if (optionalPlayer.compareTo(thisPlayer)!=0) {
             return new ResponseEntity<>(makeMap("error", "Access error"), HttpStatus.FORBIDDEN);
         }
+/*        if (optionalGame == null || optionalGame !=0){
+            return new ResponseEntity<>(makeMap("error", "Access error. The Game does not exist"), HttpStatus.FORBIDDEN);
+        }*/
         return new ResponseEntity<>(queryGameViewDTO(optionalGamePlayer.get()), HttpStatus.OK);
     }
 
@@ -276,6 +261,8 @@ public class SalvoController {
     }
 
 //------------------------------------------  METODOS COMPLEMENTARIOS ----------------------------------------------------------------------------
+
+
 
     private boolean isGuest(Authentication authentication) {
         return authentication == null || authentication instanceof AnonymousAuthenticationToken;

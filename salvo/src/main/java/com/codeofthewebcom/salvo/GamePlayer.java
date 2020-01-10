@@ -82,4 +82,5 @@ public class GamePlayer {
     public Score getScore(){
         return this.player.getScore(this.game);
     }
+
 }
