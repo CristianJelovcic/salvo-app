@@ -29,7 +29,7 @@
             <button id="startPlay-btn" type="button" class="btn btn-warning mt-2">
                 Start to play
             </button>
-            <button id="shoot-btn" class="btn btn-warning mt-2" onclick="addSalvoes">Shoot!</button>
+            <button id="shoot-btn" class="btn btn-warning mt-2">Shoot!</button>
 
         </div>
         <div class="col-4 ">
@@ -50,6 +50,7 @@
                 <table class="table table-bordered ">
                     <tbody>
                     <tr v-for="item in coordenadaY">
+                        <td class="celda" :id="item+0"></td>
                         <td class="celda" :id="item+1"></td>
                         <td class="celda" :id="item+2"></td>
                         <td class="celda" :id="item+3"></td>
@@ -59,7 +60,6 @@
                         <td class="celda" :id="item+7"></td>
                         <td class="celda" :id="item+8"></td>
                         <td class="celda" :id="item+9"></td>
-                        <td class="celda" :id="item+10"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -75,6 +75,7 @@
                 <table class="table table-bordered ">
                     <tbody>
                     <tr v-for="item in coordenadaY">
+                        <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+0"></td>
                         <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+1"></td>
                         <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+2"></td>
                         <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+3"></td>
@@ -84,7 +85,6 @@
                         <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+7"></td>
                         <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+8"></td>
                         <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+9"></td>
-                        <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+10"></td>
                     </tr>
                     </tbody>
                 </table>

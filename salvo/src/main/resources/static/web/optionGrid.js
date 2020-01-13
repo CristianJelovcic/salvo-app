@@ -116,3 +116,21 @@ $(function () {
     //todas las funciones se encuentran en la documentación
     //https://github.com/gridstack/gridstack.js/tree/develop/doc
 });
+
+function shoot(event) {
+    let id = event.target.id.slice(1,3);
+    if(app.newSalvo.locationSalvo.length < app.totalShoot){
+        if ((app.newSalvo.locationSalvo.indexOf(id))){
+            event.target.classList.add("salvos");
+            app.newSalvo.locationSalvo.push(id);
+            console.log(app.newSalvo.locationSalvo);
+            app.newSalvo.locationSalvo.length===5? addSalvoes():"";
+        }else {
+            alert("ERROR, NO SE PUEDE DISPARAR AQUI");
+        }
+    }else{
+        addSalvoes();
+        app.newSalvo.locationSalvo=[];
+        alert("ERROR, ESPERE AL PROXIMO TURNO");
+        console.log("ERROR, ESPERE AL PROXIMO TURNO");
+    }

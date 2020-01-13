@@ -3,7 +3,6 @@ const gpId = urlParams.get("gp");
 var grid;
 var currentUser;
 
-
 //GET JSON
 $(function () {
     function loadData() {
@@ -38,8 +37,9 @@ var app = new Vue({
         opponentShips: [],
         location: [],
         salvoes: [],
-        newSalvo:{turn: "", locationSalvo: []},
-        totalShoot:5,
+        newSalvo:{turn: 0, locationSalvo: []},
+        numberOfShots:5,
+        shoots:[],
         hits: [],
         placedShips: []
     },
@@ -296,7 +296,7 @@ function paintLocationSalvoHits(loc, turn) {
 }
 
 //------------------------------------------ SALVOS ----------------------------------------------------------------------------
-
+var MESSAGE_ERROR={};
 // POST DEL SALVO
 function addSalvoes(){
     $.post({
@@ -306,9 +306,13 @@ function addSalvoes(){
         contentType: "application/json"})
         .done(function(){
             console.log("done");
+            window.location.reload();
         })
-        .fail(function(){
-            console.log("fail");
+        .fail(function(jqXHR, textStatus, errorThrown){
+            MESSAGE_ERROR=jqXHR.responseText;
+            alert(MESSAGE_ERROR);
+            console.log(MESSAGE_ERROR);
+            window.location.reload();
         })
 }
 
@@ -319,17 +323,23 @@ function addSalvoes(){
 // FUNCION PARA CAPTURAR LOS VALORES DEL SALVO
 function shoot(event) {
     let id = event.target.id.slice(1,3);
-    console.log(id);
-    event.target.classList.add("salvos");
-    if(app.newSalvo.locationSalvo.length < app.totalShoot){
-        if ((app.newSalvo.locationSalvo.indexOf(id))){
+    console.log(event.target);
+    if (!document.body.classList.contains('salvos')){
+        if (app.newSalvo.locationSalvo.length<app.numberOfShots){
             app.newSalvo.locationSalvo.push(id);
-            console.log(app.newSalvo.locationSalvo);
+            console.log("SALVO: "+app.newSalvo.locationSalvo);
+            app.shoots.push(id);
+            console.log("LISTA DE DIPAROS: "+ app.shoots);
+            event.target.classList.add("salvos");
+            //app.newSalvo.locationSalvo.length===5? window.location.reload():"";
         }else{
-            console.log("ERROR, NO SE PUEDE SDISPARAR AQUI");}
+            addSalvoes();
+            app.newSalvo.locationSalvo=[];
+        }
+    }else {
+        alert("YOU CAN'T SHOOT HERE")
+    }
 
-    }else{
-        console.log("ERROR, ESPERE AL PROXIMO TURNO");}
 }
 
 

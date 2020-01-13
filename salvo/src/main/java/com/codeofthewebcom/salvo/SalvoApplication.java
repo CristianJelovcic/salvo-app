@@ -66,7 +66,7 @@ public class SalvoApplication {
 
 
             // INSTANCIA 1 DE BARCOS PARA LA PARTIDA DE JUEGO  1
-            Ship ship0 = new Ship("Destroyer", Arrays.asList("H2", "H3", "H4"));
+/*            Ship ship0 = new Ship("Destroyer", Arrays.asList("H2", "H3", "H4"));
             Ship ship1 = new Ship("Submarine", Arrays.asList("E1", "F1", "G1"));
             Ship ship2 = new Ship("Patrol Boat", Arrays.asList("B4", "B5"));
             gamePlayer1.addShip(ship0);
@@ -225,7 +225,7 @@ public class SalvoApplication {
 //----------------------------------------------------------------------------------------------------------------------
 
             // INSTANCIA 1 DE BARCOS PARA LA PARTIDA DE JUEGO  7
-/*            Ship ship23 = new Ship("Destroyer", Arrays.asList("B5", "C5", "D5"));
+*//*            Ship ship23 = new Ship("Destroyer", Arrays.asList("B5", "C5", "D5"));
             Ship ship24 = new Ship("Patrol Boat", Arrays.asList("C6", "C7"));
             gamePlayer12.addShip(ship23);
             gamePlayer12.addShip(ship24);
@@ -233,7 +233,7 @@ public class SalvoApplication {
             Salvo salvo24 = new Salvo(2, Arrays.asList("A2", "A3", "D8"));
             gamePlayer12.addSalvo(salvo23);
             gamePlayer12.addSalvo(salvo24);
-            gameplayerRepository.save(gamePlayer12);*/
+            gameplayerRepository.save(gamePlayer12);*//*
 
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -257,7 +257,7 @@ public class SalvoApplication {
             Salvo salvo28 = new Salvo(2, Arrays.asList("A2", "A3", "D8"));
             gamePlayer14.addSalvo(salvo27);
             gamePlayer14.addSalvo(salvo28);
-            gameplayerRepository.save(gamePlayer14);
+            gameplayerRepository.save(gamePlayer14);*/
         };
     }
 }
