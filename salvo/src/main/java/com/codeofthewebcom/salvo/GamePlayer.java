@@ -56,6 +56,8 @@ public class GamePlayer {
         return player;
     }
 
+
+
     public void addShip(Ship ship) {
         ship.setGamePlayer(this);
         ships.add(ship);
@@ -82,5 +84,11 @@ public class GamePlayer {
     public Score getScore(){
         return this.player.getScore(this.game);
     }
+
+    public Optional<GamePlayer> getOpponentGamePlayer(){
+        return this.game.getGamePlayers().stream().filter(gp -> gp.getId() != this.id).findFirst();
+    }
+
+
 
 }

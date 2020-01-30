@@ -10,19 +10,37 @@
 .celda {
     background-color: skyblue;
     width: 45px;
-    height: 45px;
+    height: 45px; !important;
 }
 
 .salvosHits {
-    color: white;
+    background-image: url("../img/hit3.gif");
+    background-color: skyblue;
+    z-index: 50 !important;
+    color: mediumvioletred;
     text-align: center;
-    background-image: linear-gradient(#e66465, #e5b513);
+    font-size: x-small;
+    font-weight: bolder;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 45px;
+    height: 45px !important;
+    padding: 0px; !important;
 }
 
 .salvos {
-    color: white;
-    text-align: center;
-    background-image: linear-gradient(rgba(0, 0, 0, 1), #e5b513);
+    color: red;
+    text-align: left;
+    font-size: x-small;
+    background-image: url('../img/pngfuel.png');
+    background-color:skyblue;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 45px;
+    height: 45px !important;
+    padding: 0px; !important;
 }
 
 .ship {
@@ -38,6 +56,9 @@
 }
 
 #ships {
-    background-color: aqua;
+    background-color: skyblue;
 }
+/*#history{
+    float:top 600px;
+}*/
 

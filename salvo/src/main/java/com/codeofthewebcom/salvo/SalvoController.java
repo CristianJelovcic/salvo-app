@@ -28,6 +28,8 @@ public class SalvoController {
     @Autowired
     private ShipRepository shipRepository;
 
+    @Autowired
+    private SalvoRepository salvoRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -196,7 +198,12 @@ public class SalvoController {
         dto.put("gamePlayers", gamePlayer.getGame().getGamePlayers().stream().map(game_Player -> queryGamePlayerDTO(game_Player)).collect(Collectors.toList()));
         dto.put("ships", gamePlayer.getShips().stream().map(ship -> queryShipDTO(ship)));
         dto.put("salvos", gamePlayer.getGame().getGamePlayers().stream().flatMap(gameP -> gameP.getSalvo().stream().map(salvo -> querySalvoDTO(salvo))).collect(Collectors.toList()));
-
+        dto.put("hits", gamePlayer.getSalvo().stream().map(salvo ->querySalvoandHitsDTO(salvo)).collect(Collectors.toList()));
+        if (gamePlayer.getOpponentGamePlayer().isPresent()) {
+              dto.put("hitsOpponent", gamePlayer.getOpponentGamePlayer().get().getSalvo().stream().map(salvo -> querySalvoandHitsDTO(salvo)).collect(Collectors.toList()));
+        }else{
+            dto.put("hitsOpponent", "Null");
+        }
         return dto;
     }
 
@@ -244,6 +251,18 @@ public class SalvoController {
         dto.put("player", salvo.getGamePlayer().getPlayer().getID());
         dto.put("turn", salvo.getTurn());
         dto.put("salvoLocation", salvo.getLocationSalvo());
+
+        return dto;
+
+    }
+
+    // ESTE METODO DTO CREA UN JSON PARA VISTA DE LOS SALVOS DE UN JUEGO
+    private Map<String, Object> querySalvoandHitsDTO(Salvo salvo) {
+        Map<String, Object> dto = new LinkedHashMap<String, Object>();
+        dto.put("turn", salvo.getTurn());
+        dto.put("hits", salvo.getHits());
+        dto.put("skins", salvo.getSinks());
+
         return dto;
 
     }
@@ -280,5 +299,6 @@ public class SalvoController {
     }
 
     private static final String[] EMPTY_ARRAY = new String[0];
+
 
 }

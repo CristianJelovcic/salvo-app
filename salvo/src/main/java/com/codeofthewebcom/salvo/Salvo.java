@@ -4,9 +4,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
-import java.util.ArrayList;
+import java.util.*;
 
-import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -68,4 +68,37 @@ public class Salvo {
     public void setTurn(int turn) {
         this.turn = turn;
     }
+
+    public void addShots (List<String> locationSalvo) {
+
+        this.locationSalvo.addAll(locationSalvo);
+    }
+
+
+
+    public List<String> getHits(){
+        return locationSalvo.stream()
+                .filter(shot -> this.getGamePlayer().getOpponentGamePlayer().get().getShips().stream().anyMatch(ship -> ship.getLocationShip().contains(shot)))
+                .collect(Collectors.toList());
+    }
+
+    public List<Map<String, Object>> getSinks (){
+        List<String> allShots = new ArrayList<>();
+        this.gamePlayer.getSalvo().stream()
+                .filter(salvo -> salvo.getTurn() <= this.turn)
+                .forEach(salvo -> allShots.addAll(salvo.getLocationSalvo()));
+
+        return this.gamePlayer.getShips().stream()
+                .filter(ship -> allShots.containsAll(ship.getLocationShip()))
+                .map(ship -> queryShipDTO(ship))
+                .collect(Collectors.toList());
+    }
+
+    private Map<String, Object> queryShipDTO(Ship ship) {
+        Map<String, Object> dto = new LinkedHashMap<String, Object>();
+        dto.put("type", ship.getTypeShip());
+        return dto;
+
+    }
+
 }

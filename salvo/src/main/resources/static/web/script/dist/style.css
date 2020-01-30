@@ -6,51 +6,61 @@
 }
 
 .carrier-Horizontal{
+    z-index: 3;
     background-image: url('img/carrierhor.png');
     background-size: contain;
 }
 
 .carrier-Vertical{
+    z-index: 3;
     background-image: url('img/carrierver.png');
     background-size: 100% 100%;
     width: 45px !important;
 }
 .battleship-Horizontal{
+    z-index: 3;
     background-image: url('img/battleshiphor.png');
     background-size: contain;
 }
 
 .battleship-Vertical{
+    z-index: 3;
     background-image: url('img/battleshipver.png');
     background-size: 100% 100%;
     width: 45px !important;
 }
 .submarine-Horizontal{
+    z-index: 3;
     background-image: url('img/submarinehor.png');
     background-size: contain;
 }
 
 .submarine-Vertical{
+    z-index: 3;
     background-image: url('img/submarinever.png');
     background-size: 100% 100%;
     width: 45px !important;
 }
 .destroyer-Horizontal{
+    z-index: 3;
     background-image: url('img/destroyerhor.png');
     background-size: contain;
 }
 
 .destroyer-Vertical{
+    z-index: 3;
     background-image: url('img/destroyerver.png');
     background-size: 100% 100%;
     width: 45px !important;
 }
 .patroal-Horizontal{
+    z-index: 3;
     background-image: url('img/patrolboathor.png');
     background-size: contain;
 }
 
 .patroal-Vertical{
+    z-index: 3;
     background-image: url('img/patrolboatver.png');
     background-size: 100% 100%;
     width: 45px !important;

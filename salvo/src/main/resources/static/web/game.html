@@ -17,7 +17,7 @@
 
 <body>
 <div id="app" class="container-fluid">
-    <div class="row">
+    <div class="row mt-2">
         <div class="col-4">
 
             <select name="listaships" id="listaships" class="custom-select">
@@ -26,11 +26,9 @@
             </select>
         </div>
         <div class="col-sm-2">
-            <button id="startPlay-btn" type="button" class="btn btn-warning mt-2">
-                Start to play
+            <button id="startPlay-btn" type="button" class="btn btn-sm btn-warning">
+                PLACE THE SHIPS!
             </button>
-            <button id="shoot-btn" class="btn btn-warning mt-2">Shoot!</button>
-
         </div>
         <div class="col-4 ">
             <div id="player" class="mr-3">
@@ -44,13 +42,36 @@
             <button id="logout-btn" type="button" class="btn btn-primary" onclick="logout()">Logout</button>
         </div>
     </div>
-    <div class="row">
+    <div id="history" class="row mt-2">
+        <div class="col-6">
+            <table class="table table-bordered ">
+                <tr><th colspan="4">{{viewer}}</th></tr>
+                <tr><th>Turn</th><th>Hits</th><th>skins</th></tr>
+                <tr v-for="item in hitsTable">
+                    <td>{{item.turn}}</td>
+                    <td>{{item.hits.length}}</td>
+                    <td>{{item.skins.map(x => x.type).join(', ')}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-6">
+            <table class="table table-bordered ">
+                <tr><th colspan="4">{{oponente}}</th></tr>
+                <tr><th>Turn</th><th>Hits</th><th>skins</th></tr>
+                <tr v-for="item in hitsTableOpp">
+                    <td>{{item.turn}}</td>
+                    <td>{{item.hits.length}}</td>
+                    <td>{{item.skins.map(x => x.type).join(', ')}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row mt-5">
         <div class="col-6">
             <div class="gameboard gameboardSize">
                 <table class="table table-bordered ">
                     <tbody>
                     <tr v-for="item in coordenadaY">
-                        <td class="celda" :id="item+0"></td>
                         <td class="celda" :id="item+1"></td>
                         <td class="celda" :id="item+2"></td>
                         <td class="celda" :id="item+3"></td>
@@ -60,13 +81,14 @@
                         <td class="celda" :id="item+7"></td>
                         <td class="celda" :id="item+8"></td>
                         <td class="celda" :id="item+9"></td>
+                        <td class="celda" :id="item+10"></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
             <div class="grid-ships gameboard">
                 <!-- div que usa la librería gridstack grid-stack-10 se indica que son 10 columnas-->
-                <div id="grid" class="grid-stack grid-stack-10">
+                <div id="grid" class="grid-stack grid-stack-10 data-gs-max-row-10">
                 </div>
             </div>
         </div>
@@ -75,7 +97,6 @@
                 <table class="table table-bordered ">
                     <tbody>
                     <tr v-for="item in coordenadaY">
-                        <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+0"></td>
                         <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+1"></td>
                         <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+2"></td>
                         <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+3"></td>
@@ -85,6 +106,7 @@
                         <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+7"></td>
                         <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+8"></td>
                         <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+9"></td>
+                        <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+10"></td>
                     </tr>
                     </tbody>
                 </table>

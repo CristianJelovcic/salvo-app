@@ -56,6 +56,7 @@ $(function () {
     //está libre, true
     console.log(grid.isAreaEmpty(1, 7, 3, 1));
 
+
     $("#carrier").click(function(){
         if($(this).children().hasClass("carrierHorizontal")){
             grid.resize($(this),1,5);
@@ -117,6 +118,7 @@ $(function () {
     //https://github.com/gridstack/gridstack.js/tree/develop/doc
 });
 
+/*
 function shoot(event) {
     let id = event.target.id.slice(1,3);
     if(app.newSalvo.locationSalvo.length < app.totalShoot){
@@ -129,8 +131,7 @@ function shoot(event) {
             alert("ERROR, NO SE PUEDE DISPARAR AQUI");
         }
     }else{
-        addSalvoes();
-        app.newSalvo.locationSalvo=[];
+
         alert("ERROR, ESPERE AL PROXIMO TURNO");
         console.log("ERROR, ESPERE AL PROXIMO TURNO");
-    }
+    }*/

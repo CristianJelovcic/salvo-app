@@ -18,7 +18,7 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
-
+    //@Jsonignore corta la recircularidad con gamplayer/game
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
     Set<GamePlayer> gamePlayers = new HashSet<>();
 

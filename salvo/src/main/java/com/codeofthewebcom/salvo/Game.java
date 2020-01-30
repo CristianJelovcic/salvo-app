@@ -38,7 +38,7 @@ public class Game {
         this.creationDate = creationDate;
     }
 
-    //methods
+//methods
 
     // setters and getters
 
