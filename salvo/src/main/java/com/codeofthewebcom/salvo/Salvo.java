@@ -77,9 +77,13 @@ public class Salvo {
 
 
     public List<String> getHits(){
-        return locationSalvo.stream()
-                .filter(shot -> this.getGamePlayer().getOpponentGamePlayer().get().getShips().stream().anyMatch(ship -> ship.getLocationShip().contains(shot)))
-                .collect(Collectors.toList());
+        if(this.getGamePlayer().getOpponentGamePlayer().isPresent() && this.getGamePlayer().getShips().size()!=0) {
+            return locationSalvo.stream()
+                    .filter(shot -> this.getGamePlayer().getOpponentGamePlayer().get().getShips().stream().anyMatch(ship -> ship.getLocationShip().contains(shot)))
+                    .collect(Collectors.toList());
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     public List<Map<String, Object>> getSinks (){

@@ -27,21 +27,21 @@ public class Score {
 
     //ATBTS
     private LocalDateTime finishDate;
-    private double score;
+    private float score;
 
     // CONSTR
     public Score() {
 
     }
 
-    public Score(Game game, Player player, double score) {
+    public Score(Game game, Player player, float score) {
         this.game = game;
         this.player = player;
         this.score = score;
         this.finishDate = LocalDateTime.now();
     }
 
-    public Score(Game game, Player player, double score, LocalDateTime finishDate) {
+    public Score(Player player, Game game, float score, LocalDateTime finishDate) {
         this.game = game;
         this.player = player;
         this.score = score;
@@ -65,7 +65,7 @@ public class Score {
         return finishDate;
     }
 
-    public double getScore() {
+    public float getScore() {
         return score;
     }
 }

@@ -58,7 +58,9 @@
 #ships {
     background-color: skyblue;
 }
-/*#history{
-    float:top 600px;
-}*/
+#history{
+    position: absolute;
+    top: 800px;
+    z-index: 2;
+}
 

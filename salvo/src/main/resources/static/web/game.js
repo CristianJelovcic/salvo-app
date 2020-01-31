@@ -37,19 +37,20 @@ var app = new Vue({
         opponentShips: [],
         location: [],
         salvoes: [],
-        newSalvo:{turn: 0, locationSalvo: []},
-        numberOfShots:5,
-        shoots:[],
+        newSalvo: {turn: 0, locationSalvo: []},
+        numberOfShots: 5,
+        shoots: [],
         hits: [],
-        hitsOpp:[],
-        hitsTable:[],
-        hitsTableOpp:[],
+        hitsOpp: [],
+        hitsTable: [],
+        hitsTableOpp: [],
+        game_state:"",
         placedShips: []
     },
-    methods:{
-        vshoot: function(id) {
+    methods: {
+        vshoot: function (id) {
             shoot(id);
-}
+        }
     }
 })
 //------------------------------------------ JSON  ---------------------------------------------------------------------
@@ -63,7 +64,8 @@ function myJson(data) {
     app.ships = myJson.ships;
     app.salvoes = myJson.salvos;
     app.hits = myJson.hits;
-    app.hitsOpp=myJson.hitsOpponent;
+    app.hitsOpp = myJson.hitsOpponent;
+    app.game_state = myJson.game_state;
     selectShips(app.ships);
     listGamePlayers(app.gamePlayer);
     selectSalvos(app.salvoes);
@@ -92,7 +94,7 @@ function createGrid() {
         disableOneColumnMode: true,
         //false permite mover, true impide
         staticGrid: 0,
-        maxRow:10,
+        maxRow: 10,
         //activa animaciones (cuando se suelta el elemento se ve más suave la caida)
         animate: true
     }
@@ -112,17 +114,16 @@ function createGrid() {
 
         //ANALYZE THE LOCATION: IF IT IS EMPTY - IF IT CAN BE ROTATED - IF IT FALLS OUT OF GRID
         $("#carrier").click(function () {
-            let ship=document.getElementById("carrier");
-            let x= parseInt(ship.getAttribute("data-gs-x"));
-            let y= parseInt(ship.getAttribute("data-gs-y"));
-            let w=parseInt(ship.getAttribute("data-gs-width"));
-            let h=parseInt(ship.getAttribute("data-gs-height"));
-            if ($(this).children().hasClass("carrier-Horizontal") && y<=5 && grid.isAreaEmpty (x, y+1, h, w)) {
+            let ship = document.getElementById("carrier");
+            let x = parseInt(ship.getAttribute("data-gs-x"));
+            let y = parseInt(ship.getAttribute("data-gs-y"));
+            let w = parseInt(ship.getAttribute("data-gs-width"));
+            let h = parseInt(ship.getAttribute("data-gs-height"));
+            if ($(this).children().hasClass("carrier-Horizontal") && y <= 5 && grid.isAreaEmpty(x, y + 1, h, w)) {
                 grid.resize($(this), 1, 5);
                 $(this).children().removeClass("carrier-Horizontal");
                 $(this).children().addClass("carrier-Vertical");
-            } else
-                if($(this).children().hasClass("carrier-Vertical") && x<=5 && grid.isAreaEmpty (x+1, y, h, w)) {
+            } else if ($(this).children().hasClass("carrier-Vertical") && x <= 5 && grid.isAreaEmpty(x + 1, y, h, w)) {
                 grid.resize($(this), 5, 1);
                 $(this).children().addClass("carrier-Horizontal");
                 $(this).children().removeClass("carrier-Vertical");
@@ -130,71 +131,67 @@ function createGrid() {
         });
 
         $("#patroal").click(function () {
-            let ship=document.getElementById("patroal");
-            let x= parseInt(ship.getAttribute("data-gs-x"));
-            let y= parseInt(ship.getAttribute("data-gs-y"));
-            let w=parseInt(ship.getAttribute("data-gs-width"));
-            let h=parseInt(ship.getAttribute("data-gs-height"));
-            if ($(this).children().hasClass("patroal-Horizontal") && y<=8 && grid.isAreaEmpty (x, y+1, h, w)) {
+            let ship = document.getElementById("patroal");
+            let x = parseInt(ship.getAttribute("data-gs-x"));
+            let y = parseInt(ship.getAttribute("data-gs-y"));
+            let w = parseInt(ship.getAttribute("data-gs-width"));
+            let h = parseInt(ship.getAttribute("data-gs-height"));
+            if ($(this).children().hasClass("patroal-Horizontal") && y <= 8 && grid.isAreaEmpty(x, y + 1, h, w)) {
                 grid.resize($(this), 1, 2);
                 $(this).children().removeClass("patroal-Horizontal");
                 $(this).children().addClass("patroal-Vertical");
-            } else
-                if ($(this).children().hasClass("patroal-Vertical") && x<=8 && grid.isAreaEmpty (x+1, y, h, w)) {
+            } else if ($(this).children().hasClass("patroal-Vertical") && x <= 8 && grid.isAreaEmpty(x + 1, y, h, w)) {
                 grid.resize($(this), 2, 1);
                 $(this).children().addClass("patroal-Horizontal");
                 $(this).children().removeClass("patroal-Vertical");
             }
         });
         $("#submarine").click(function () {
-            let ship=document.getElementById("submarine");
-            let x= parseInt(ship.getAttribute("data-gs-x"));
-            let y= parseInt(ship.getAttribute("data-gs-y"));
-            let w=parseInt(ship.getAttribute("data-gs-width"));
-            let h=parseInt(ship.getAttribute("data-gs-height"));
-            if ($(this).children().hasClass("submarine-Horizontal") && y<=7 && grid.isAreaEmpty (x, y+1, h, w)) {
+            let ship = document.getElementById("submarine");
+            let x = parseInt(ship.getAttribute("data-gs-x"));
+            let y = parseInt(ship.getAttribute("data-gs-y"));
+            let w = parseInt(ship.getAttribute("data-gs-width"));
+            let h = parseInt(ship.getAttribute("data-gs-height"));
+            if ($(this).children().hasClass("submarine-Horizontal") && y <= 7 && grid.isAreaEmpty(x, y + 1, h, w)) {
                 grid.resize($(this), 1, 3);
                 $(this).children().removeClass("submarine-Horizontal");
                 $(this).children().addClass("submarine-Vertical");
 
-            } else
-                if ($(this).children().hasClass("submarine-Vertical") && x<=7 && grid.isAreaEmpty (x+1, y, h, w)) {
+            } else if ($(this).children().hasClass("submarine-Vertical") && x <= 7 && grid.isAreaEmpty(x + 1, y, h, w)) {
                 grid.resize($(this), 3, 1);
                 $(this).children().addClass("submarine-Horizontal");
                 $(this).children().removeClass("submarine-Vertical");
             }
         });
         $("#destroyer").click(function () {
-            let ship=document.getElementById("destroyer");
-            let x= parseInt(ship.getAttribute("data-gs-x"));
-            let y= parseInt(ship.getAttribute("data-gs-y"));
-            let w=parseInt(ship.getAttribute("data-gs-width"));
-            let h=parseInt(ship.getAttribute("data-gs-height"));
-            if ($(this).children().hasClass("destroyer-Horizontal") && y<=7 && grid.isAreaEmpty (x, y+1, h, w) ) {
+            let ship = document.getElementById("destroyer");
+            let x = parseInt(ship.getAttribute("data-gs-x"));
+            let y = parseInt(ship.getAttribute("data-gs-y"));
+            let w = parseInt(ship.getAttribute("data-gs-width"));
+            let h = parseInt(ship.getAttribute("data-gs-height"));
+            if ($(this).children().hasClass("destroyer-Horizontal") && y <= 7 && grid.isAreaEmpty(x, y + 1, h, w)) {
                 grid.resize($(this), 1, 3);
                 $(this).children().removeClass("destroyer-Horizontal");
                 $(this).children().addClass("destroyer-Vertical");
 
-            } else
-                if ($(this).children().hasClass("battleship-Vertical") && x<=7 && grid.isAreaEmpty (x+1, y, h, w)){
+            } else if ($(this).children().hasClass("battleship-Vertical") && x <= 7 && grid.isAreaEmpty(x + 1, y, h, w)) {
                 grid.resize($(this), 3, 1);
                 $(this).children().addClass("destroyer-Horizontal");
                 $(this).children().removeClass("destroyer-Vertical");
             }
         });
         $("#battleship").click(function () {
-            let ship=document.getElementById("battleship");
-            let x= parseInt(ship.getAttribute("data-gs-x"));
-            let y= parseInt(ship.getAttribute("data-gs-y"));
-            let w=parseInt(ship.getAttribute("data-gs-width"));
-            let h=parseInt(ship.getAttribute("data-gs-height"));
-            if ($(this).children().hasClass("battleship-Horizontal") && y<=6 && grid.isAreaEmpty (x, y+1, h, w)) {
+            let ship = document.getElementById("battleship");
+            let x = parseInt(ship.getAttribute("data-gs-x"));
+            let y = parseInt(ship.getAttribute("data-gs-y"));
+            let w = parseInt(ship.getAttribute("data-gs-width"));
+            let h = parseInt(ship.getAttribute("data-gs-height"));
+            if ($(this).children().hasClass("battleship-Horizontal") && y <= 6 && grid.isAreaEmpty(x, y + 1, h, w)) {
                 grid.resize($(this), 1, 4);
                 $(this).children().removeClass("battleship-Horizontal");
                 $(this).children().addClass("battleship-Vertical");
 
-            } else
-                if ($(this).children().hasClass("battleship-Vertical") && x<=6 && grid.isAreaEmpty (x+1, y, h, w)){
+            } else if ($(this).children().hasClass("battleship-Vertical") && x <= 6 && grid.isAreaEmpty(x + 1, y, h, w)) {
                 grid.resize($(this), 4, 1);
                 $(this).children().addClass("battleship-Horizontal");
                 $(this).children().removeClass("battleship-Vertical");
@@ -209,7 +206,6 @@ function createGrid() {
         getShipsLocation();
     }
 }
-
 
 
 //------------------------------------------  SHIPS  ----------------------------------------------------------------------------
@@ -236,23 +232,22 @@ $("#startPlay-btn").click(function () {
     $(".grid-stack-item").each(function () {
         var coordinate = [];
         var ship = {typeShip: "", locationShip: ""};
-            if ($(this).attr("data-gs-width") !== "1") {
-                for (var i = 0; i < parseInt($(this).attr("data-gs-width")); i++) {
-                    coordinate.push(String.fromCharCode(parseInt($(this).attr("data-gs-y")) + 65) + (parseInt($(this).attr("data-gs-x")) + i + 1).toString());
-                }
-            } else {
-                for (var i = 0; i < parseInt($(this).attr("data-gs-height")); i++) {
-                    coordinate.push(String.fromCharCode(parseInt($(this).attr("data-gs-y")) + i + 65) + (parseInt($(this).attr("data-gs-x")) + 1).toString());
-                }
+        if ($(this).attr("data-gs-width") !== "1") {
+            for (var i = 0; i < parseInt($(this).attr("data-gs-width")); i++) {
+                coordinate.push(String.fromCharCode(parseInt($(this).attr("data-gs-y")) + 65) + (parseInt($(this).attr("data-gs-x")) + i + 1).toString());
             }
+        } else {
+            for (var i = 0; i < parseInt($(this).attr("data-gs-height")); i++) {
+                coordinate.push(String.fromCharCode(parseInt($(this).attr("data-gs-y")) + i + 65) + (parseInt($(this).attr("data-gs-x")) + 1).toString());
+            }
+        }
 
-            ship.typeShip = $(this).children().attr("alt");
-            ship.locationShip = coordinate;
-            app.placedShips.push(ship);
+        ship.typeShip = $(this).children().attr("alt");
+        ship.locationShip = coordinate;
+        app.placedShips.push(ship);
     })
     postShips();
 });
-
 
 
 // CREATE WIDGETS (SHIPS)
@@ -330,25 +325,27 @@ function salvoHits(salvo) {
 }
 
 function salvoHitsLeft(hits) {
-    hits.forEach(hit=> {
-        hit.hits.forEach(loc =>{
-            paintLocationSalvoHitsLeft(loc, hit.turn) })});
+    hits.forEach(hit => {
+        hit.hits.forEach(loc => {
+            paintLocationSalvoHitsLeft(loc, hit.turn)
+        })
+    });
 }
 
 
-function hitHistory(hits,hitsOpp) {
-    hits.forEach(hit=>{
-        app.hitsTable.sort(function (a,b) {
-            return a.turn -b.turn;
-        }).push(hit);
-    })
-    if (hitsOpp!="Null"){
-    hitsOpp.forEach(hit=>{
-        app.hitsTableOpp.sort(function (a,b) {
-            return a.turn -b.turn;
-        }).push(hit);
-    })}
-
+function hitHistory(hits, hitsopp) {
+        hits.sort(function (a, b) {
+            return a.turn - b.turn;
+        });
+        hits.forEach(hit => {
+            app.hitsTable.push(hit);
+        })
+        hitsopp.sort(function (a, b) {
+            return a.turn - b.turn;
+        });
+        hitsopp.forEach(hit => {
+            app.hitsTableOpp.push(hit);
+        })
 }
 
 // PAINT THE SELDAS WITH IMPACT OF SAVINGS ON SHIPS
@@ -358,29 +355,32 @@ function paintLocationSalvoHits(loc, turn) {
     elemento.classList.remove("ship");
     elemento.classList.add("salvosHits");
 }
+
 function paintLocationSalvoHitsLeft(loc, turn) {
-    var elemento2 = document.getElementById("s"+loc);
+    var elemento2 = document.getElementById("s" + loc);
     //elemento2.innerHTML = turn;
-    elemento2.classList.remove("ship","salvos");
+    elemento2.classList.remove("ship", "salvos");
     elemento2.classList.add("salvosHits");
 }
 
 //------------------------------------------ SALVOS ----------------------------------------------------------------------------
-var MESSAGE_ERROR={};
+var MESSAGE_ERROR = {};
+
 // POST DEL SALVO
-function addSalvoes(){
+function addSalvoes() {
     $.post({
-        url: "/api/games/players/"+gpId+"/salvoes",
+        url: "/api/games/players/" + gpId + "/salvoes",
         data: JSON.stringify(app.newSalvo),
         dataType: "text",
-        contentType: "application/json"})
-        .done(function(){
+        contentType: "application/json"
+    })
+        .done(function () {
             console.log("done");
             window.location.reload();
-            app.newSalvo.locationSalvo=[];
+            app.newSalvo.locationSalvo = [];
         })
-        .fail(function(jqXHR, textStatus, errorThrown){
-            MESSAGE_ERROR=jqXHR.responseText;
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            MESSAGE_ERROR = jqXHR.responseText;
             alert(MESSAGE_ERROR);
             console.log(MESSAGE_ERROR);
             window.location.reload();
@@ -393,24 +393,23 @@ function addSalvoes(){
 
 // FUNCION PARA CAPTURAR LOS VALORES DEL SALVO
 function shoot(event) {
-    let id = event.target.id.slice(1,4);
-    if (event.target.classList.contains('celda')){
-        if (app.newSalvo.locationSalvo.length<app.numberOfShots){
+    let id = event.target.id.slice(1, 4);
+    if (event.target.classList.contains('celda')) {
+        if (app.newSalvo.locationSalvo.length < app.numberOfShots) {
             app.newSalvo.locationSalvo.push(id);
             event.target.classList.add("salvos");
             event.target.classList.remove("celda");
-            app.newSalvo.locationSalvo.length===5? addSalvoes(): "";
-        }else{
+            app.newSalvo.locationSalvo.length === 5 ? addSalvoes() : "";
+        } else {
             addSalvoes();
         }
-    }else {
+    } else {
         event.target.classList.add("celda");
         event.target.classList.remove("salvos");
         app.newSalvo.locationSalvo.pop(id);
     }
 
 }
-
 
 
 // SELECT THE SAVED
