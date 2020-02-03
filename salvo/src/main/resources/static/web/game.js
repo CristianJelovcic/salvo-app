@@ -2,7 +2,6 @@ const urlParams = new URLSearchParams(window.location.search);
 const gpId = urlParams.get("gp");
 var grid;
 var currentUser;
-var reload_time=10000;
 
 //GET JSON
 $(function () {
@@ -72,8 +71,8 @@ function myJson(data) {
     selectSalvos(app.salvoes);
     createGrid();
     hitHistory(app.hits, app.hitsOpp);
-    setInterval(function(){ if (app.game_state=="WAIT_OPPONENT_SALVOES"){
-        return true
+    window.setInterval(function(){ if (app.game_state=="WAIT_OPPONENT_SALVOES"){
+        location.reload();
     }; }, 6000);
 
 }
