@@ -2,6 +2,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const gpId = urlParams.get("gp");
 var grid;
 var currentUser;
+var reload_time=10000;
 
 //GET JSON
 $(function () {
@@ -44,7 +45,7 @@ var app = new Vue({
         hitsOpp: [],
         hitsTable: [],
         hitsTableOpp: [],
-        game_state:"",
+        game_state: "",
         placedShips: []
     },
     methods: {
@@ -71,6 +72,9 @@ function myJson(data) {
     selectSalvos(app.salvoes);
     createGrid();
     hitHistory(app.hits, app.hitsOpp);
+    setInterval(function(){ if (app.game_state=="WAIT_OPPONENT_SALVOES"){
+        return true
+    }; }, 6000);
 
 }
 
@@ -334,18 +338,18 @@ function salvoHitsLeft(hits) {
 
 
 function hitHistory(hits, hitsopp) {
-        hits.sort(function (a, b) {
-            return a.turn - b.turn;
-        });
-        hits.forEach(hit => {
-            app.hitsTable.push(hit);
-        })
-        hitsopp.sort(function (a, b) {
-            return a.turn - b.turn;
-        });
-        hitsopp.forEach(hit => {
-            app.hitsTableOpp.push(hit);
-        })
+    hits.sort(function (a, b) {
+        return a.turn - b.turn;
+    });
+    hits.forEach(hit => {
+        app.hitsTable.push(hit);
+    })
+    hitsopp.sort(function (a, b) {
+        return a.turn - b.turn;
+    });
+    hitsopp.forEach(hit => {
+        app.hitsTableOpp.push(hit);
+    })
 }
 
 // PAINT THE SELDAS WITH IMPACT OF SAVINGS ON SHIPS
@@ -465,5 +469,8 @@ function logout() {
             console.log(error);
         });
 }
-
+function game_reload() {
+    if (app.game_state=="WAIT_OPPONENT_SALVOES"){
+        reload_time=6000;
+    }}
 

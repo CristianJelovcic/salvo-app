@@ -1,0 +1,19 @@
+@font-face {
+    font-family: Takecover;
+    src:url("Takecover.ttf");
+}
+
+@font-face {
+    font-family: old_school_united_stencil;
+    src:url("old_school_united_stencil.ttf");
+}
+@font-face {
+    font-family: ARMY_RUST;
+    src:url("ARMY_RUST.ttf");
+}
+h2, h3, h4 {
+    font-family: ARMY_RUST;
+}
+h1 {
+    font-family: Takecover;
+}

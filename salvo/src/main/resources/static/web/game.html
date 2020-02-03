@@ -12,11 +12,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/game.css">
+    <link rel="stylesheet" href="css/font/fontstyle.css">
+
     <title>Salvo - GamePlayers</title>
 </head>
 
 <body>
 <div id="app" class="container-fluid">
+    <div class="d-flex justify-content-center"><h1>BATTLESHIP GAME</h1></div>
     <div class="row mt-2">
         <div class="col-12 alert alert-warning alert-dismissible fade show" role="alert">
             <strong>{{game_state}}</strong>
@@ -24,20 +27,20 @@
     </div>
     <div class="row mt-2">
 
-        <div class="col-sm-2">
-            <button id="startPlay-btn" type="button" class="btn btn-sm btn-warning">
+        <div class="col-3">
+            <button id="startPlay-btn" type="button" class="btn btn-sm btn-warning mt-2">
                 PLACE THE SHIPS!
             </button>
-            <button id="logout-btn" type="button" class="btn btn-sm btn-primary" onclick="logout()">Logout</button>
+            <button id="logout-btn" type="button" class="btn btn-sm btn-primary mt-2" onclick="logout()">Logout</button>
         </div>
     </div>
     <div class="row mt-5">
         <div class="col-4">
             <div id="player">
-                <span>Gameplayer: {{viewer}}</span>
+                <span>You: {{viewer}}</span>
             </div>
-            <div class="gameboard gameboardSize">
-                <table class="table table-bordered ">
+            <div class=" sea gameboard gameboardSize">
+                <table class=" table table-bordered table-responsive">
                     <tbody>
                     <tr v-for="item in coordenadaY">
                         <td class="celda" :id="item+1"></td>
@@ -61,7 +64,7 @@
             </div>
         </div>
         <div class="col-2">
-            <table class="table table-bordered ">
+            <table class="table tabgame table-bordered table-responsive">
                 <tr><th colspan="4">{{viewer}}</th></tr>
                 <tr><th>Turn</th><th>Hits</th><th>skins</th></tr>
                 <tr v-for="item in hitsTable">
@@ -72,7 +75,7 @@
             </table>
         </div>
         <div class="col-2">
-            <table class="table table-bordered ">
+            <table class="table tabgame table-bordered table-responsive ">
                 <tr><th colspan="4">{{oponente}}</th></tr>
                 <tr><th>Turn</th><th>Hits</th><th>skins</th></tr>
                 <tr v-for="item in hitsTableOpp">
@@ -82,12 +85,12 @@
                 </tr>
             </table>
         </div>
-        <div class="col-4">
+        <div class=" col-4">
             <div id="opponent">
-                <span>Opponent: {{oponente}}</span>
+                <span>You Opponent: {{oponente}}</span>
             </div>
-            <div class=" gridSalvo gameboard gameboardSize">
-                <table class="table table-bordered ">
+            <div class=" radar gridSalvo gameboard gameboardSize">
+                <table class="table table-bordered table-responsive ">
                     <tbody>
                     <tr v-for="item in coordenadaY">
                         <td v-on:click="vshoot($event)" class="celda" :id="'s'+item+1"></td>

@@ -7,16 +7,16 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/font/fontstyle.css">
     <link rel="stylesheet" href="css/game.css">
-
     <title>Salvo - GamePlayers</title>
 </head>
 <body>
-<h2>GamesView</h2>
 <!-- LIST GAME -->
 <div class="container-fluid" id="app">
-    <div class="row">
-        <div class="col-6">
+    <div class="d-flex justify-content-center"><h1>BATTLESHIP GAME</h1></div>
+    <div class="row mt-3">
+        <div class="col-2">
             <form id="login-form" method="post">
                 <div><label for="exampleInputEmail1">Username: <input type="email" class="form-control"
                                                                       id="exampleInputEmail1"
@@ -27,32 +27,25 @@
                                                                          id="exampleInputPassword1"
                                                                          placeholder="Password" name="password"></label>
                 </div>
-                <button id="login-btn" type="button" class="btn btn-primary" v-show=(playerName=="Guest")
+                <button id="login-btn" type="button" class="btn btn-sm btn-primary mt-2" v-show=(playerName=="Guest")
                         v-on:click="vlogin">Log in
                 </button>
-                <button id="register-btn" type="button" class="btn btn-primary" v-show=(playerName=="Guest")
+                <button id="register-btn" type="button" class="btn btn-sm btn-primary mt-2" v-show=(playerName=="Guest")
                         v-on:click="vregister">Register
                 </button>
-                <button id="logout-btn" type="button" class="btn btn-primary" v-show=(playerName!=="Guest")
+                <button id="logout-btn" type="button" class="btn btn-sm btn-primary mt-2" v-show=(playerName!=="Guest")
                         v-on:click="vlogout">Log out
+                </button>
+                <button id="create-btn" type="button" class="btn btn-sm btn-warning mt-2" v-show=(playerName!=="Guest")
+                        v-on:click="vcreateGame"
+                >CREATE GAME
                 </button>
             </form>
 
         </div>
-        <div class="col-6">
-            <h2>Username: {{playerName}}</h2>
-
-            <button id="create-btn" type="button" class="btn btn-success" v-show=(playerName!=="Guest")
-                    v-on:click="vcreateGame"
-            >CREATE GAME
-            </button>
-
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
+        <div class="col-5">
             <h2>Games</h2>
-            <table class="table table-striped table-dark table-bordered">
+            <table class=" tabgame table table-striped  table-bordered">
                 <tr v-for="(item, key) in games">
                     <td> {{item.created | moment}}</td>
                     <td :id="item.id"> {{item.gamePlayers.map(valor =>
@@ -72,11 +65,10 @@
                 </tr>
             </table>
         </div>
-        <!-- LIST GAME -->
-        <div class="col-6">
+        <div class="col-5">
             <h2>Leaderboard</h2>
-            <table class="table table-bordered table-striped">
-                <thead class="thead-light">
+            <table class="tabgame table table-striped  table-bordered">
+                <thead>
                 <tr>
                     <th>UserName</th>
                     <th>Total</th>

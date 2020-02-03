@@ -211,7 +211,7 @@ function returnGame(game) {
 function redirection(game) {
     for (j = 0; j < game.gamePlayers.length; j++) {
         if (game.gamePlayers[j].player.id === app.player.id) {
-            return "http://localhost:8080/web/game.html?gp=" + game.gamePlayers[j].id;
+            return "/web/game.html?gp=" + game.gamePlayers[j].id;
         }
     }
 }
@@ -219,7 +219,7 @@ function redirection(game) {
 function gameCreate() {
     $.post("/api/games"
         ,function(data){
-            return window.location="http://localhost:8080/web/game.html?gp="+ data.gpId;
+            return window.location="/web/game.html?gp="+ data.gpId;
         }
     )
         .fail(registerFail);
@@ -228,7 +228,7 @@ function gameCreate() {
 function joinGame(nn) {
     $.post("/api/game/"+nn+"/players"
         ,function(data){
-            return window.location="http://localhost:8080/web/game.html?gp="+ data.Success.id;
+            return window.location="/web/game.html?gp="+ data.Success.id;
         }
     )
         .fail(registerFail(error));

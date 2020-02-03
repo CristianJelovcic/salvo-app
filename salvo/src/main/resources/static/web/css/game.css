@@ -1,22 +1,34 @@
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.76), rgb(0, 0, 0));
+    height: 1200px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #ffd843;
+}
+h1{
+    font-size: 100px;
+}
 .gameboard{
     position: absolute;
     /* margin: 30px; */
     border: solid black 3px;
+    z-index: 10 !important;
 }
 .gameboardSize{
     width: 450px;
     height: 450px;
 }
 .celda {
-    background-color: skyblue;
+/*    background-color: skyblue;*/
     width: 45px;
     height: 45px; !important;
 }
 
 .salvosHits {
     background-image: url("../img/hit3.gif");
-    background-color: skyblue;
-    z-index: 50 !important;
+    /*background-color: skyblue;*/
+    z-index: 15 !important;
     color: mediumvioletred;
     text-align: center;
     font-size: x-small;
@@ -34,7 +46,7 @@
     text-align: left;
     font-size: x-small;
     background-image: url('../img/pngfuel.png');
-    background-color:skyblue;
+    //background-color:skyblue;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -46,21 +58,52 @@
 .ship {
     background-color: royalblue;
 }
-
+.tabgame{
+    color: #ffd843;
+    opacity: 0.5;
+    border: #ffd843 1px;
+}
+.radar{
+    background-image: url("../img/radar2.gif");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 5 !important;
+    width: 450px;
+    height: 450px;
+}
+.sea{
+    background-image: url("../img/azure-sea.gif");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 5 !important;
+    width: 450px;
+    height: 450px;
+}
 #player {
-    background-color: chartreuse;
+    background-color: #36aa0c;
 }
 
 #opponent {
     background-color: palevioletred;
 }
 
-#ships {
+/*#ships {
     background-color: skyblue;
-}
+}*/
 #history{
     position: absolute;
     top: 800px;
     z-index: 2;
+}
+#backimg{
+/*    background-image: url("../img/1486747.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color:gray;*/
+
+
 }
 

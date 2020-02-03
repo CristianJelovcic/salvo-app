@@ -43,7 +43,7 @@ public class SalvoApplication {
             Game game2 = gameRepository.save(new Game(LocalDateTime.now().plusHours(1)));
             Game game3 = gameRepository.save(new Game(LocalDateTime.now().plusHours(2)));
             Game game4 = gameRepository.save(new Game(LocalDateTime.now().plusHours(3)));
-            Game game5 = gameRepository.save(new Game(LocalDateTime.now().plusHours(4)));
+          Game game5 = gameRepository.save(new Game(LocalDateTime.now().plusHours(4)));
             Game game6 = gameRepository.save(new Game(LocalDateTime.now().plusHours(5)));
             Game game7 = gameRepository.save(new Game(LocalDateTime.now().plusHours(6)));
             Game game8 = gameRepository.save(new Game(LocalDateTime.now().plusHours(7)));
